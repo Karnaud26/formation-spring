@@ -1,8 +1,8 @@
 package fr.zaroumia.formation.spring.dao;
 
-import java.util.Collection;
-
 import fr.zaroumia.formation.spring.model.Formateur;
+
+import java.util.Collection;
 
 public interface FormateurDao {
 
