@@ -53,15 +53,12 @@ public class FormateurServiceImpl implements FormateurService {
 	@Override
 	@Transactional
 	public void create(final Collection<Formateur> formateurs) {
-		if (!CollectionUtils.isEmpty(formateurs)) {
-			for (Formateur formateur : formateurs) {
-				if (formateur.getId() == null) {
-					throw new IllegalArgumentException("L'attribut ID du formateur est obligatioire");
-				}
-
+		if (formateurs.parallelStream().count() > 0) {
+			formateurs.parallelStream().forEach(formateur -> {
+				if (formateur.getAge()== null || formateur.getAge()<=0)
+					throw new IllegalArgumentException("L'age doit etre ni null, ni zero");
 				formateurDao.create(formateur);
-			}
+			});
 		}
 	}
-
 }

@@ -8,58 +8,46 @@ import org.springframework.stereotype.Repository;
 
 import fr.zaroumia.formation.spring.model.Formateur;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 @Repository
 public class FormateurDaoImpl implements FormateurDao {
 
-	private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+	//private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-	public FormateurDaoImpl(final NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
-		super();
-		this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
-	}
+	@PersistenceContext
+	private EntityManager entityManager;
 
 	@Override
 	public void create(final Formateur f) {
-		String query = "insert into formateurs values (:id, :nom, :prenom, :age)";
-		MapSqlParameterSource params = new MapSqlParameterSource();
-		params.addValue("id", f.getId());
-		params.addValue("nom", f.getNom());
-		params.addValue("prenom", f.getPrenom());
-		params.addValue("age", f.getAge());
-		namedParameterJdbcTemplate.update(query, params);
+		entityManager.persist(f);
 	}
 
 	@Override
 	public void update(final Formateur f) {
-		String query = "update formateurs set nom= :nom, prenom=:prenom, age=:age where id=:id";
-		MapSqlParameterSource params = new MapSqlParameterSource();
-		params.addValue("id", f.getId());
-		params.addValue("nom", f.getNom());
-		params.addValue("prenom", f.getPrenom());
-		params.addValue("age", f.getAge());
-		namedParameterJdbcTemplate.update(query, params);
+		Formateur oldFormeteur = entityManager.find(Formateur.class,f.getId());
+		oldFormeteur.setAge(f.getAge());
+		oldFormeteur.setNom(f.getNom());
+		oldFormeteur.setPrenom(f.getPrenom());
+		entityManager.persist(oldFormeteur);
 	}
 
 	@Override
 	public void delete(final Formateur f) {
-		String query = "delete from formateurs where id=:id";
-		MapSqlParameterSource params = new MapSqlParameterSource();
-		params.addValue("id", f.getId());
-		namedParameterJdbcTemplate.update(query, params);
+		Formateur oldFormeteur = entityManager.find(Formateur.class,f.getId());
+		entityManager.remove(oldFormeteur);
 	}
 
 	@Override
 	public Formateur find(final Long id) {
-		String query = "select * from formateurs where id=:id";
-		MapSqlParameterSource params = new MapSqlParameterSource();
-		params.addValue("id", id);
-		return namedParameterJdbcTemplate.queryForObject(query, params, new FormateurRowMapper());
+		Formateur frmeteur = entityManager.find(Formateur.class,id);
+		return frmeteur;
 	}
 
 	@Override
 	public Collection<Formateur> findAll() {
-		String query = "select * from formateurs ";
-		return namedParameterJdbcTemplate.query(query, new FormateurRowMapper());
+		final String q = "From Formateur";
+		return entityManager.createQuery(q,Formateur.class).getResultList();
 	}
-
 }

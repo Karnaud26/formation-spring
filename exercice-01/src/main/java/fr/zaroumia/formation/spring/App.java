@@ -3,7 +3,7 @@ package fr.zaroumia.formation.spring;
 import fr.zaroumia.formation.spring.model.Formateur;
 import fr.zaroumia.formation.spring.service.FormateurService;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.Collection;
 
@@ -14,7 +14,7 @@ import java.util.Collection;
 public class App {
 	public static void main(final String[] args) {
 
-		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("appContext_001");
+		ApplicationContext applicationContext = new AnnotationConfigApplicationContext(Configuration.class);
 		FormateurService formateurService = applicationContext.getBean(FormateurService.class);
 
 		// TODO Créer un formateur
@@ -27,7 +27,8 @@ public class App {
 		Collection<Formateur> formateurCollection = formateurService.findAll();
 		formateurCollection.stream().forEach(formateur -> System.out.println(formateur.toString()));
 		// TODO Modifier un formateur
-
+		f.setPrenom("KTA");
+		formateurService.update(f);
 		// TODO R�cup�rer le formateur par son ID
 		formateurService.find(f.getId());
 

@@ -27,10 +27,14 @@ public class App {
 
 		// TODO Ajouter 2 formateurs à la collection avec un formateur sans ID
 		List<Formateur> formateursAvecUnFormateurSansID = new ArrayList<>();
+		formateursAvecUnFormateurSansID.add(new Formateur("lorem","dolor",null,25));
+		formateursAvecUnFormateurSansID.add(new Formateur("upsen","sitamen",null,25));
 		create(service, formateursAvecUnFormateurSansID);
 
 		// TODO Ajouter 2 formateurs OK à la collection
 		List<Formateur> formateurs = new ArrayList<>();
+		formateurs.add(new Formateur("akk","prenom",5l,25));
+		formateurs.add(new Formateur("ajj","prenomj",6l,25));
 		create(service, formateurs);
 	}
 

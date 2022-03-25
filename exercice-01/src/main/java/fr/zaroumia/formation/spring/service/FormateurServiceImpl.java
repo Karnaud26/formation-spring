@@ -1,21 +1,18 @@
 package fr.zaroumia.formation.spring.service;
 
+import fr.zaroumia.formation.spring.dao.FormateurDao;
 import fr.zaroumia.formation.spring.dao.FormateurDaoImpl;
 import fr.zaroumia.formation.spring.model.Formateur;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
+@Service
 public class FormateurServiceImpl implements FormateurService {
 
-    private FormateurDaoImpl formateurDao;
-
-    public void setFormateurDao(FormateurDaoImpl formateurDao) {
-        this.formateurDao = formateurDao;
-    }
-
-    /*public FormateurServiceImpl (final FormateurDaoImpl formateurDao){
-        this.formateurDao = formateurDao;
-    }*/
+    @Autowired
+    private FormateurDao formateurDao;
 
     @Override
     public void create(Formateur f) {

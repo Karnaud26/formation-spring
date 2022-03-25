@@ -1,11 +1,11 @@
 package fr.zaroumia.formation.spring.dao;
 
 import fr.zaroumia.formation.spring.model.Formateur;
+import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
+@Repository
 public class FormateurDaoImpl implements FormateurDao {
 
     private final Set<Formateur> dataFormateur = new HashSet<>();
@@ -30,7 +30,16 @@ public class FormateurDaoImpl implements FormateurDao {
 
     @Override
     public Collection<Formateur> findAll() {
-        return new HashSet<>(dataFormateur); //dataFormateur.stream().collect(Collectors.toList());
+        //return new HashSet<>(dataFormateur); //dataFormateur.stream().collect(Collectors.toList());
+        Formateur formateur = new Formateur();
+        formateur.setPrenom("Baba");
+        formateur.setId(2L);
+        formateur.setNom("Lorm");
+        formateur.setAge(25);
+
+        List<Formateur> formateurList = new ArrayList<>();
+        formateurList.add(formateur);
+        return formateurList;
     }
 
     @Override

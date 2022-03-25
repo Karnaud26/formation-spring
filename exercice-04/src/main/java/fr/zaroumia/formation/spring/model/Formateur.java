@@ -15,7 +15,11 @@ public class Formateur {
 		this.age = age;
 	}
 
-	public String getNom() {
+    public Formateur() {
+
+    }
+
+    public String getNom() {
 		return nom;
 	}
 

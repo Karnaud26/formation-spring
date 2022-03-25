@@ -1,10 +1,19 @@
 package fr.zaroumia.formation.spring.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "formateurs")
 public class Formateur {
 
-	private String nom;
-	private String prenom;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
+	@Column(name = "nom")
+	private String nom;
+	@Column(name = "prenom")
+	private String prenom;
+	@Column(name = "age")
 	private Integer age;
 
 	public Formateur(final String nom, final String prenom, final Long id, final Integer age) {

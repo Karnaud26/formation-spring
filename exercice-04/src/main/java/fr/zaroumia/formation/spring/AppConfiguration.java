@@ -9,11 +9,14 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @ComponentScan({ "fr.zaroumia.formation.spring.dao", "fr.zaroumia.formation.spring.service" })
 @PropertySource("classpath:database.properties")
-public class AppConfiguration {
+@EnableTransactionManagement
+public class AppConfiguration{
 
 	@Value("${datasource.url}")
 	private String url;
@@ -37,6 +40,11 @@ public class AppConfiguration {
 	@Bean
 	public NamedParameterJdbcTemplate namedParameterJdbcTemplate(final DataSource dataSource) {
 		return new NamedParameterJdbcTemplate(dataSource);
+	}
+
+	@Bean
+	public DataSourceTransactionManager dataSourceTransactionManager(final DataSource dataSource){
+		return new DataSourceTransactionManager(dataSource);
 	}
 
 }

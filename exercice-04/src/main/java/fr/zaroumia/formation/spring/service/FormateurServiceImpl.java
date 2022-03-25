@@ -1,11 +1,13 @@
 package fr.zaroumia.formation.spring.service;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import fr.zaroumia.formation.spring.dao.FormateurDao;
 import fr.zaroumia.formation.spring.model.Formateur;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class FormateurServiceImpl implements FormateurService {
@@ -20,7 +22,6 @@ public class FormateurServiceImpl implements FormateurService {
 	@Override
 	public void create(final Formateur f) {
 		formateurDao.create(f);
-
 	}
 
 	@Override
@@ -31,7 +32,6 @@ public class FormateurServiceImpl implements FormateurService {
 	@Override
 	public void delete(final Formateur f) {
 		formateurDao.delete(f);
-
 	}
 
 	@Override
@@ -49,9 +49,14 @@ public class FormateurServiceImpl implements FormateurService {
 	}
 
 	@Override
-	public void create(final Collection<Formateur> formateurs) {
-		// TODO Auto-generated method stub
-
+	@Transactional
+	public void create(final Collection<Formateur> formateurs) throws IllegalArgumentException {
+		if (formateurs.parallelStream().collect(Collectors.toList()).size()>0){
+			formateurs.parallelStream().forEach(formateur -> {
+				if (formateur.getId() == null)
+					new IllegalArgumentException("I'idenditifant ne peut etre null");
+				formateurDao.create(formateur);
+			});
+		}
 	}
-
 }

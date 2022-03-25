@@ -25,16 +25,16 @@ public class App {
 		ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfiguration.class);
 		FormateurService service = applicationContext.getBean(FormateurService.class);
 
-		// TODO Ajouter 2 formateurs à la collection avec un formateur sans ID
-		List<Formateur> formateursAvecUnFormateurSansID = new ArrayList<>();
-		formateursAvecUnFormateurSansID.add(new Formateur("Dupont", "Dupont", 1L, 32));
-		formateursAvecUnFormateurSansID.add(new Formateur("Durant", "Durant", null, 33));
-		create(service, formateursAvecUnFormateurSansID);
+		// TODO Ajouter 2 formateurs Ã  la collection avec un formateur sans age
+		/*List<Formateur> formateursAvecUnFormateurSanAge = new ArrayList<>();
+		formateursAvecUnFormateurSanAge.add(new Formateur("Dupont", "Dupont", null, null));
+		formateursAvecUnFormateurSanAge.add(new Formateur("Durant", "Durant", null, 33));
+		create(service, formateursAvecUnFormateurSanAge);*/
 
-		// TODO Ajouter 2 formateurs OK à la collection
+		// TODO Ajouter 2 formateurs OK Ã  la collection
 		List<Formateur> formateurs = new ArrayList<>();
-		formateurs.add(new Formateur("Conan", "Conan", 1L, 32));
-		formateurs.add(new Formateur("Dinous", "Dinous", 2L, 33));
+		formateurs.add(new Formateur("Conan", "Conan", null, 32));
+		formateurs.add(new Formateur("Dinous", "Dinous", null, 33));
 		create(service, formateurs);
 	}
 
@@ -49,5 +49,4 @@ public class App {
 			System.out.println("nombre de formateurs dans la collection : " + collection.size());
 		}
 	}
-
 }
